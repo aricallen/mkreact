@@ -1,0 +1,23 @@
+{
+  "extends": ["tslint:latest", "tslint-react"],
+  "rules": {
+    "object-literal-sort-keys": false,
+    "member-access": false,
+    "member-ordering": false,
+    "quotemark": false,
+    "ordered-imports": false,
+    "no-console": false,
+    "trailing-comma": [
+      true,
+      {
+        "singleline": "never",
+        "multiline": {
+          "objects": "always",
+          "functions": "never",
+          "arrays": "never"
+        },
+        "esSpecCompliant": true
+      }
+    ]
+  }
+}

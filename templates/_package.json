@@ -1,0 +1,24 @@
+{
+  "name": "{{scope}}{{moduleName}}",
+  "version": "0.0.1",
+  "description": "",
+  "main": "dist/bundle.js",
+  "scripts": {
+    "dev": "node --max-old-space-size=8192 node_modules/.bin/webpack-dev-server --mode development --hot",
+    "build": "webpack --mode production",
+    "compile-scss": "node-sass src/scss/main.scss --output css",
+    "compile": "tsc"
+  },
+  "devDependencies": {},
+  "dependencies": {},
+  "engines": {
+    "node": ">=10.4.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn compile"
+    }
+  },
+  "author": "{{scope}}",
+  "license": "MIT"
+}
