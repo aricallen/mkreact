@@ -7,10 +7,10 @@ const { promisify } = require('util');
 const recursiveReadDirSync = require('recursive-readdir-sync');
 const changeCase = require('change-case');
 const args = require('minimist')(process.argv)
-const { transformContent, getDependencyStr, transformTemplates } = require('./helpers.js');
+const { transformContent, getDependencyStr } = require('./helpers.js');
 
 const usage = `
-  Usage: mkreact --name=<module-name> [--scope=scope] [--typescript=true]
+  Usage: mkreact --name=<module-name> [--scope=scope]
 `;
 
 const templateDir = 'templates';
@@ -33,6 +33,10 @@ if (fs.existsSync(moduleDir) === false) {
 // create vscode dir
 if (fs.existsSync(path.join(moduleDir, '.vscode')) === false) {
   fs.mkdirSync(path.join(moduleDir, '.vscode'));
+}
+
+if (fs.existsSync(path.join(moduleDir, 'src')) === false) {
+  fs.mkdirSync(path.join(moduleDir, 'src'));
 }
 
 for (const templateFilePath of transformTemplateList(templates)) {
