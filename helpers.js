@@ -1,5 +1,4 @@
-const args = require('minimist')(process.argv);
-const { dependencies, typescript, devDependencies } = require('./deps.js');
+const { dependencies, devDependencies } = require('./deps.js');
 
 const getDependencyStr = () => {
   const commands = [];
@@ -10,22 +9,11 @@ const getDependencyStr = () => {
   if (devDependencies.length > 0) {
     commands.push(`yarn add --dev ${devDependencies.join(' ')}`);
   }
-
-  if (args.typescript) {
-    const { dependencies, devDependencies } = typescript;
-    if (dependencies.length > 0) {
-      commands.push(`yarn add ${dependencies.join(' ')}`);
-    }
-
-    if (devDependencies.length > 0) {
-      commands.push(`yarn add --dev ${devDependencies.join(' ')}`);
-    }
-  }
   return commands.join(' && ');
 };
 
 const transformContent = (content, filePath) => {
-  if (!args.typescript || !filePath.includes('package.json')) {
+  if (!filePath.includes('package.json')) {
     return content;
   }
 
@@ -42,11 +30,4 @@ const transformContent = (content, filePath) => {
   return JSON.stringify(data, null, 2);
 };
 
-const transformTemplateList = (templates) => {
-  if (!args.typescript) {
-    return templates.filter((t) => t.includes('tsconfig.json') === false);
-  }
-  return templates;
-}
-
-module.exports = { getDependencyStr, transformContent, transformTemplateList };
+module.exports = { getDependencyStr, transformContent };

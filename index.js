@@ -7,7 +7,7 @@ const { promisify } = require('util');
 const recursiveReadDirSync = require('recursive-readdir-sync');
 const changeCase = require('change-case');
 const args = require('minimist')(process.argv)
-const { transformContent, getDependencyStr, transformTemplateList } = require('./helpers.js');
+const { transformContent, getDependencyStr } = require('./helpers.js');
 
 const usage = `
   Usage: mkreact --name=<module-name> [--scope=scope]
@@ -38,7 +38,7 @@ shelljs.mkdir('-p', path.join(moduleDir, '.vscode'));
 shelljs.mkdir('-p', path.join(moduleDir, 'src', 'components'));
 shelljs.mkdir('-p', path.join(moduleDir, 'src', 'scss'));
 
-for (const templateFilePath of transformTemplateList(templates)) {
+for (const templateFilePath of templates) {
   const content = fs.readFileSync(templateFilePath, { encoding: 'utf8' });
   const scrubbed = content
     .replace('{{scope}}', scope !== undefined ? `@${scope.replace('@', '')}/` : '')
