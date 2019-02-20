@@ -7,7 +7,7 @@ const { promisify } = require('util');
 const recursiveReadDirSync = require('recursive-readdir-sync');
 const changeCase = require('change-case');
 const args = require('minimist')(process.argv)
-const { transformContent, getDependencyStr } = require('./helpers.js');
+const { transformContent, getDependencyStr, transformTemplateList } = require('./helpers.js');
 
 const usage = `
   Usage: mkreact --name=<module-name> [--scope=scope]
@@ -27,17 +27,16 @@ const moduleDir = path.join(process.cwd(), moduleName);
 const { scope } = args;
 
 // create module dir
-if (fs.existsSync(moduleDir) === false) {
-  fs.mkdirSync(moduleDir);
-}
-// create vscode dir
-if (fs.existsSync(path.join(moduleDir, '.vscode')) === false) {
-  fs.mkdirSync(path.join(moduleDir, '.vscode'));
+if (fs.existsSync(moduleDir)) {
+  console.log(`${moduleDir} already exists. Exiting...`);
+  process.exit(1);
 }
 
-if (fs.existsSync(path.join(moduleDir, 'src')) === false) {
-  fs.mkdirSync(path.join(moduleDir, 'src'));
-}
+// create required dir structure
+shelljs.mkdir('-p', moduleDir);
+shelljs.mkdir('-p', path.join(moduleDir, '.vscode'));
+shelljs.mkdir('-p', path.join(moduleDir, 'src', 'components'));
+shelljs.mkdir('-p', path.join(moduleDir, 'src', 'scss'));
 
 for (const templateFilePath of transformTemplateList(templates)) {
   const content = fs.readFileSync(templateFilePath, { encoding: 'utf8' });

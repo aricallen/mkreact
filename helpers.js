@@ -24,7 +24,7 @@ const getDependencyStr = () => {
   return commands.join(' && ');
 };
 
-const trasnformContent = (content, filePath) => {
+const transformContent = (content, filePath) => {
   if (!args.typescript || !filePath.includes('package.json')) {
     return content;
   }
@@ -49,4 +49,4 @@ const transformTemplateList = (templates) => {
   return templates;
 }
 
-module.exports = { getDependencyStr, trasnformContent, transformTemplateList };
+module.exports = { getDependencyStr, transformContent, transformTemplateList };
