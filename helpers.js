@@ -19,14 +19,7 @@ const transformContent = (content, filePath) => {
 
   const data = JSON.parse(content);
   data.main = 'dist/index.js';
-  data.types = 'dist/index.d.ts';
-  data.husky = {
-    hooks: {
-      'pre-commit': 'npm run build',
-    },
-  };
-  data.scripts.build = 'tsc';
-  data.scripts.dev = 'tsc --watch';
+  data.scripts.build = 'webpack';
   return JSON.stringify(data, null, 2);
 };
 
