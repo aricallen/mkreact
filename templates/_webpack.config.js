@@ -18,9 +18,11 @@ module.exports = {
   },
 
   devServer: {
-    contentBase: path.join(__dirname, 'src'),
-    open: false,
-    historyApiFallback: true,
+    static: {
+      directory: path.join(__dirname, 'public'),
+    },
+    compress: true,
+    port: 9000,
   },
 
   // Enable sourcemaps for debugging webpack's output.
@@ -28,17 +30,6 @@ module.exports = {
 
   resolve: {
     extensions: ['.js', '.jsx', '.json'],
-  },
-
-  externals: {
-    request: 'request',
-    'aws-sdk': 'aws-sdk',
-    require: 'require',
-    'node-pre-gyp': 'node-pre-gyp',
-    'worker-farm': 'worker-farm',
-    'loader-runner': 'loader-runner',
-    fsevents: 'fsevents',
-    'terser-webpack-plugin': 'terser-webpack-plugin'
   },
 
   module: {
@@ -75,7 +66,7 @@ module.exports = {
       // other misc files
       {
         test: /\.(jpg|jpeg|png|gif|mp3|svg)$/,
-        loaders: ['file-loader'],
+        loader: 'file-loader',
       },
     ],
   },
